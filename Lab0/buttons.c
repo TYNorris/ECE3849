@@ -57,10 +57,10 @@ void ButtonInit(void)
     GPIOPinTypeGPIOInput(GPIO_PORTK_BASE, GPIO_PIN_6);
     GPIOPadConfigSet(GPIO_PORTK_BASE, GPIO_PIN_6, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
-    // GPI D5 = Joystick Push Button
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-    GPIOPinTypeGPIOInput(GPIO_PORTD_BASE, GPIO_PIN_5);
-    GPIOPadConfigSet(GPIO_PORTD_BASE, GPIO_PIN_5, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+    // GPI A1 = Joystick Push Button
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_1);
+    GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_1, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
     // analog input AIN13, at GPIO PD2 = BoosterPack Joystick HOR(X)
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
@@ -159,9 +159,9 @@ void ButtonISR(void) {
     // read hardware button state
     uint32_t gpio_buttons =
               (~GPIOPinRead(GPIO_PORTJ_BASE, 0xff) & (GPIO_PIN_1 | GPIO_PIN_0)) | // EK-TM4C1294XL buttons in positions 0 and 1
+             ((~GPIOPinRead(GPIO_PORTA_BASE, 0xff) & (GPIO_PIN_1)) << 3) | //Joystick Select
              ((~GPIOPinRead(GPIO_PORTH_AHB_BASE, 0xff) & (GPIO_PIN_1)) << 1) | //Boosterpack S1
-             ((~GPIOPinRead(GPIO_PORTK_BASE, 0xff) & (GPIO_PIN_6)) >>3) | //Boosterpack S2
-             ((~GPIOPinRead(GPIO_PORTD_BASE, 0xff) & (GPIO_PIN_5)) >>1) ; //Joystick Select
+             ((~GPIOPinRead(GPIO_PORTK_BASE, 0xff) & (GPIO_PIN_6)) >>3) ; //Boosterpack S2
 
     //gpio_buttons = gpio_buttons | boost_buttons;
 
@@ -176,6 +176,10 @@ void ButtonISR(void) {
 
     if (presses & 1) { // EK-TM4C1294XL button 1 pressed
         running = !running;
+    }
+
+    if (presses & 2){ // button 2 pressed, reset timer
+        gTime = 0;
     }
 
     if (running) {

@@ -46,8 +46,11 @@ int main(void)
     uint32_t huns;
     uint32_t secs;
     uint32_t mins;
+    uint32_t buttons_read;
+    int i;
     char str[50];   // string buffer
     char str_debug[50];
+    int buttons[9]; //array to hold the bitmap
     // full-screen rectangle
     tRectangle rectFullScreen = {0, 0, GrContextDpyWidthGet(&sContext)-1, GrContextDpyHeightGet(&sContext)-1};
 
@@ -55,11 +58,15 @@ int main(void)
         GrContextForegroundSet(&sContext, ClrBlack);
         GrRectFill(&sContext, &rectFullScreen); // fill screen with black
         time = gTime; // read shared global only once
+        buttons_read = gButtons;
         huns = time%100;
         secs = (time/100)%60;
         mins = (time/6000);
+        for (i = 0; i < 9 ; i++){
+            buttons[i] = (buttons_read & (1 << i)) >> i;
+        }
         snprintf(str, sizeof(str), "Time = %02u:%02u:%02u",mins,secs,huns); // convert time to string
-        snprintf(str_debug, sizeof(str), "Buttons = %03u", gButtons);
+        snprintf(str_debug, sizeof(str), "Buttons = %d%d%d%d%d%d%d%d%d", buttons[8], buttons[7], buttons[6], buttons[5], buttons[4], buttons[3], buttons[2], buttons[1], buttons[0]);
         GrContextForegroundSet(&sContext, ClrYellow); // yellow text
         GrStringDraw(&sContext, str, /*length*/ -1, /*x*/ 0, /*y*/ 0, /*opaque*/ false);
         GrStringDraw(&sContext, str_debug, /*length*/ -1, /*x*/ 0, /*y*/ 12, /*opaque*/ false);

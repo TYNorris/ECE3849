@@ -126,33 +126,33 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-ece3849b17_lab0_tnorris.out \
+ece3849b17_lab0_tnorris_kgriffin.out \
 
 EXE_OUTPUTS__QUOTED += \
-"ece3849b17_lab0_tnorris.out" \
+"ece3849b17_lab0_tnorris_kgriffin.out" \
 
 BIN_OUTPUTS += \
-ece3849b17_lab0_tnorris.hex \
+ece3849b17_lab0_tnorris_kgriffin.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"ece3849b17_lab0_tnorris.hex" \
+"ece3849b17_lab0_tnorris_kgriffin.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "ece3849b17_lab0_tnorris.out"
+	@$(MAKE) --no-print-directory -Onone "ece3849b17_lab0_tnorris_kgriffin.out"
 
 # Tool invocations
-ece3849b17_lab0_tnorris.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+ece3849b17_lab0_tnorris_kgriffin.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me -O1 --opt_for_speed=3 --define=ccs="ccs" --define=PART_TM4C1294NCPDT -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"ece3849b17_lab0_tnorris.map" --heap_size=0 --stack_size=2048 -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ece3849b17_lab0_tnorris_linkInfo.xml" --rom_model -o "ece3849b17_lab0_tnorris.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me -O1 --opt_for_speed=3 --define=ccs="ccs" --define=PART_TM4C1294NCPDT -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"ece3849b17_lab0_tnorris_kgriffin.map" --heap_size=0 --stack_size=2048 -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ece3849b17_lab0_tnorris_kgriffin_linkInfo.xml" --rom_model -o "ece3849b17_lab0_tnorris_kgriffin.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-ece3849b17_lab0_tnorris.hex: $(EXE_OUTPUTS)
+ece3849b17_lab0_tnorris_kgriffin.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/bin/armhex"  -o "ece3849b17_lab0_tnorris.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/bin/armhex"  -o "ece3849b17_lab0_tnorris_kgriffin.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
